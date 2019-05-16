@@ -11,13 +11,29 @@ public class WeatherTest {
                 .param("Lang", "ua")
                 .param("return_id", 1)
                 .param("q", "Lviv")
-                //.log().uri()
+                .log().uri()
                 .get()
                 .then()
-//                .log().all()
+                .log().all()
                 .statusCode(200);
 
         String cityId = response.extract().asString();
         System.out.println(cityId);
+        String idOfCity = cityId.substring(cityId.length() - 9);
+        System.out.println(idOfCity);
+
+        RestAssured.baseURI = "https://pinformer.sinoptik.ua/pinformer4.php";
+        ValidatableResponse secondResponse = RestAssured.given()
+                .param("Lang", "ua")
+                .param("type", "js")
+                .param("id", idOfCity)
+                .log().uri()
+                .get()
+                .then()
+                .log().all()
+                .statusCode(200);
+
+        String cityWeather = secondResponse.extract().asString();
+        System.out.println(cityWeather);
     }
 }
