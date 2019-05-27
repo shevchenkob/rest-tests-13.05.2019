@@ -1,3 +1,5 @@
+package weather;
+
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.Argument;
